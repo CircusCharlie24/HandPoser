@@ -11,7 +11,11 @@ namespace CodeLibrary24.HandPoser
         private HandPoser referencePose;
         private Button copyPoseButton;
 
-        private const string UXML_PATH = "Assets/HandPoser/Editor/HandPoserEditor.uxml";
+
+        // private const string ROOT = "Assets";
+        private const string ROOT = "Packages/com.codelibrary24.handposer";
+
+        private const string UXML_PATH = ROOT + "/HandPoser/Editor/HandPoserEditor.uxml";
 
         private HandPoser targetPose;
 
