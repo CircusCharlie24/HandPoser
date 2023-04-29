@@ -12,8 +12,8 @@ namespace CodeLibrary24.HandPoser
         private Button copyPoseButton;
 
 
-        // private const string ROOT = "Assets/HandPoser";
-        private const string ROOT = "Packages/com.codelibrary24.handposer";
+        private const string ROOT = "Assets/HandPoser";
+        // private const string ROOT = "Packages/com.codelibrary24.handposer";
 
         private const string UXML_PATH = ROOT + "/Editor/HandPoserEditor.uxml";
 
@@ -123,10 +123,7 @@ namespace CodeLibrary24.HandPoser
             for (int i = 0; i < referenceFinger.joints.Length; i++)
             {
                 Undo.RecordObject(targetFinger.joints[i].joint, "Record_Joint");
-
-                Quaternion referenceRotation = referenceFinger.joints[i].joint.localRotation;
-                Quaternion newRotation = referenceRotation;
-                targetFinger.joints[i].joint.localRotation = newRotation;
+                targetFinger.joints[i].joint.localRotation = referenceFinger.joints[i].joint.localRotation;
             }
         }
 
