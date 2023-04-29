@@ -11,6 +11,7 @@
                 <ui:Button text="Copy Pose From Reference" display-tooltip-when-elided="true" name="CopyPoseButton" />
             </ui:VisualElement>
         </ui:Foldout>
+        <ui:FloatField label="Transition Duration" value="0.5" name="TransitionDurationField" />
         <uie:PropertyField binding-path="thumb" name="ThumbPropertyField" label="Thumb" style="color: rgb(255, 255, 255); flex-grow: 1; justify-content: space-between; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
         <uie:PropertyField binding-path="index" name="IndexPropertyField" label="Index" style="color: rgb(255, 255, 255); flex-grow: 1; justify-content: space-between; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
         <uie:PropertyField binding-path="middle" name="MiddlePropertyField" label="Middle" style="color: rgb(255, 255, 255); flex-grow: 1; justify-content: space-between; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />

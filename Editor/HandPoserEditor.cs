@@ -45,7 +45,9 @@ namespace CodeLibrary24.HandPoser
             CheckCopyPoseData();
             CacheCopyToggles(container);
             DrawCopyPoseButton(container);
+            DrawDurationField(container);
         }
+
 
         private void DrawReferencePose(VisualElement container)
         {
@@ -130,6 +132,12 @@ namespace CodeLibrary24.HandPoser
         private void CheckCopyPoseData()
         {
             ShowPoseDataContainer(referencePose != null);
+        }
+
+        private void DrawDurationField(VisualElement container)
+        {
+            FloatField durationField = container.Q<FloatField>("TransitionDurationField");
+            durationField.bindingPath = "poseTransitionDuration";
         }
     }
 }
