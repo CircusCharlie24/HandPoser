@@ -1,0 +1,19 @@
+{
+  "name": "com.codelibrary24.handposer",
+  "version": "1.0.0",
+  "displayName": "Hand Poser",
+  "description": "A simple editor tool that lets you create and edit hand poses",
+  "documentationUrl": "https://ambargames.com/",
+  "changelogUrl": "https://ambargames.com/",
+  "licensesUrl": "https://ambargames.com/",
+  "keywords": [
+    "Pose",
+    "Hand Poses",
+    "Hand Pose"
+  ],
+  "author": {
+    "name": "CircusCharlie",
+    "email": "circuscharlie2428@gmail.com",
+    "url": "https://www.ambargames.com"
+  }
+}

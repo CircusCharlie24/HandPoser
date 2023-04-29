@@ -1,0 +1,14 @@
+{
+    "name": "com.codelibrary24.handposer",
+    "rootNamespace": "codelibrary24.handposer",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
