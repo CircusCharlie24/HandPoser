@@ -16,7 +16,7 @@ namespace CodeLibrary24.HandPoser
 
         private bool _isRealtimePosingEnabled;
 
-        public HandPoser defaultPose;
+        public HandPoser defaultPose; // TODO: Could be better by making a separate data class.
 
         public void MakePose(HandPoser targetPose)
         {
