@@ -1,4 +1,7 @@
-﻿using UnityEditor;
+﻿using System.IO;
+using System.Linq;
+using UnityEditor;
+using UnityEditor.PackageManager;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -8,13 +11,16 @@ namespace CodeLibrary24.HandPoser
     [CustomEditor(typeof(HandPoser))]
     public class HandPoserEditor : Editor
     {
+        private const string PackageID = "com.codelibrary24.handposer";
+        private const string PackageManifestPath = "Packages/manifest.json";
+        
         private HandPoser referencePose;
         private Button copyPoseButton;
 
-        private const string ROOT = "Assets/HandPoser";
-        // private const string ROOT = "Packages/com.codelibrary24.handposer";
+        private const string ROOT_ASSET = "Assets/HandPoser";
+        private const string ROOT_PACKAGE = "Packages/com.codelibrary24.handposer";
 
-        private const string UXML_PATH = ROOT + "/Editor/HandPoserEditor.uxml";
+        private const string UXML_PATH =  "/Editor/HandPoserEditor.uxml";
 
         private HandPoser _targetPose;
 
@@ -26,12 +32,27 @@ namespace CodeLibrary24.HandPoser
         private Toggle _copyRingToggle;
         private Toggle _copyPinkyToggle;
 
+        public static bool IsPackageInstalled()
+        {
+            string jsonText = File.ReadAllText(PackageManifestPath);
+            string json = EditorJsonUtility.ToJson(jsonText);
+            return json.Contains(PackageID);
+        }
+        
+        private string GetRootPath()
+        {
+            if (IsPackageInstalled())
+            {
+                return ROOT_PACKAGE;
+            }
+            return ROOT_ASSET;
+        }
 
         public override VisualElement CreateInspectorGUI()
         {
             _targetPose = (HandPoser) target;
             VisualElement myInspector = new VisualElement();
-            VisualTreeAsset visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(UXML_PATH);
+            VisualTreeAsset visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(GetRootPath()+UXML_PATH);
             visualTree.CloneTree(myInspector);
             DrawPoseCopier(myInspector);
             return myInspector;
