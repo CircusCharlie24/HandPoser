@@ -11,25 +11,25 @@ namespace CodeLibrary24.HandPoser
         private HandPoser referencePose;
         private Button copyPoseButton;
 
-        // private const string ROOT = "Assets/XRI_Examples/HandPoser";
-        private const string ROOT = "Packages/com.codelibrary24.handposer";
+        private const string ROOT = "Assets/HandPoser";
+        // private const string ROOT = "Packages/com.codelibrary24.handposer";
 
         private const string UXML_PATH = ROOT + "/Editor/HandPoserEditor.uxml";
 
-        private HandPoser targetPose;
+        private HandPoser _targetPose;
 
-        private VisualElement copyDataContainer;
+        private VisualElement _copyDataContainer;
 
-        private Toggle copyThumbToggle;
-        private Toggle copyIndexToggle;
-        private Toggle copyMiddleToggle;
-        private Toggle copyRingToggle;
-        private Toggle copyPinkyToggle;
+        private Toggle _copyThumbToggle;
+        private Toggle _copyIndexToggle;
+        private Toggle _copyMiddleToggle;
+        private Toggle _copyRingToggle;
+        private Toggle _copyPinkyToggle;
 
 
         public override VisualElement CreateInspectorGUI()
         {
-            targetPose = (HandPoser)target;
+            _targetPose = (HandPoser) target;
             VisualElement myInspector = new VisualElement();
             VisualTreeAsset visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(UXML_PATH);
             visualTree.CloneTree(myInspector);
@@ -39,6 +39,7 @@ namespace CodeLibrary24.HandPoser
 
         private void DrawPoseCopier(VisualElement container)
         {
+            DrawDefaultPose(container);
             DrawReferencePose(container);
             CachePoseDataContainer(container);
             CheckCopyPoseData();
@@ -47,6 +48,11 @@ namespace CodeLibrary24.HandPoser
             DrawDurationField(container);
         }
 
+        private void DrawDefaultPose(VisualElement container)
+        {
+            ObjectField defaultPoseObjectField = container.Q<ObjectField>("DefaultPoseObjectField");
+            defaultPoseObjectField.bindingPath = "defaultPose";
+        }
 
         private void DrawReferencePose(VisualElement container)
         {
@@ -61,27 +67,27 @@ namespace CodeLibrary24.HandPoser
 
         private void CachePoseDataContainer(VisualElement container)
         {
-            copyDataContainer = container.Q<VisualElement>("CopyDataContainer");
+            _copyDataContainer = container.Q<VisualElement>("CopyDataContainer");
         }
 
         private void CacheCopyToggles(VisualElement container)
         {
-            copyThumbToggle = container.Q<Toggle>("CopyThumbToggle");
-            copyIndexToggle = container.Q<Toggle>("CopyIndexToggle");
-            copyMiddleToggle = container.Q<Toggle>("CopyMiddleToggle");
-            copyRingToggle = container.Q<Toggle>("CopyRingToggle");
-            copyPinkyToggle = container.Q<Toggle>("CopyPinkyToggle");
+            _copyThumbToggle = container.Q<Toggle>("CopyThumbToggle");
+            _copyIndexToggle = container.Q<Toggle>("CopyIndexToggle");
+            _copyMiddleToggle = container.Q<Toggle>("CopyMiddleToggle");
+            _copyRingToggle = container.Q<Toggle>("CopyRingToggle");
+            _copyPinkyToggle = container.Q<Toggle>("CopyPinkyToggle");
         }
 
         private void ShowPoseDataContainer(bool show)
         {
             if (show)
             {
-                copyDataContainer.style.display = DisplayStyle.Flex;
+                _copyDataContainer.style.display = DisplayStyle.Flex;
             }
             else
             {
-                copyDataContainer.style.display = DisplayStyle.None;
+                _copyDataContainer.style.display = DisplayStyle.None;
             }
         }
 
@@ -97,25 +103,29 @@ namespace CodeLibrary24.HandPoser
 
         private void CopyPose(bool mirrorPose)
         {
-            if (copyThumbToggle.value)
+            if (_copyThumbToggle.value)
             {
-                CopyFingerPose(referencePose.thumb, targetPose.thumb);
+                CopyFingerPose(referencePose.thumb, _targetPose.thumb);
             }
-            if (copyIndexToggle.value)
+
+            if (_copyIndexToggle.value)
             {
-                CopyFingerPose(referencePose.index, targetPose.index);
+                CopyFingerPose(referencePose.index, _targetPose.index);
             }
-            if (copyMiddleToggle.value)
+
+            if (_copyMiddleToggle.value)
             {
-                CopyFingerPose(referencePose.middle, targetPose.middle);
+                CopyFingerPose(referencePose.middle, _targetPose.middle);
             }
-            if (copyRingToggle.value)
+
+            if (_copyRingToggle.value)
             {
-                CopyFingerPose(referencePose.ring, targetPose.ring);
+                CopyFingerPose(referencePose.ring, _targetPose.ring);
             }
-            if (copyPinkyToggle.value)
+
+            if (_copyPinkyToggle.value)
             {
-                CopyFingerPose(referencePose.pinky, targetPose.pinky);
+                CopyFingerPose(referencePose.pinky, _targetPose.pinky);
             }
         }
 
