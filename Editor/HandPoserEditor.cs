@@ -12,7 +12,6 @@ namespace CodeLibrary24.HandPoser
     public class HandPoserEditor : Editor
     {
         private const string PackageID = "com.codelibrary24.handposer";
-        private const string PackageManifestPath = "Packages/manifest.json";
         
         private HandPoser referencePose;
         private Button copyPoseButton;
@@ -32,16 +31,9 @@ namespace CodeLibrary24.HandPoser
         private Toggle _copyRingToggle;
         private Toggle _copyPinkyToggle;
 
-        public static bool IsPackageInstalled()
-        {
-            string jsonText = File.ReadAllText(PackageManifestPath);
-            string json = EditorJsonUtility.ToJson(jsonText);
-            return json.Contains(PackageID);
-        }
-        
         private string GetRootPath()
         {
-            if (IsPackageInstalled())
+            if (PackageFinder.IsPackageInstalled(PackageID))
             {
                 return ROOT_PACKAGE;
             }

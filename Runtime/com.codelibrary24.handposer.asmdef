@@ -1,6 +1,6 @@
 {
     "name": "com.codelibrary24.handposer",
-    "rootNamespace": "codelibrary24.handposer",
+    "rootNamespace": "CodeLibrary24.HandPoser",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
