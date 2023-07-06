@@ -53,5 +53,7 @@ namespace CodeLibrary24.HandPoser
                 referenceFinger.joints[i].joint.localRotation = newRotation;
             }
         }
+        
+        
     }
 }
