@@ -1,22 +1,17 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <ui:VisualElement name="HandPoserEditor" style="flex-grow: 1; background-color: rgb(56, 56, 56); color: rgb(56, 56, 56);">
-        <uie:ObjectField label="Default hand pose" name="DefaultPoseObjectField" type="CodeLibrary24.HandPoser.HandPoser, com.codelibrary24.handposer" />
-        <ui:Foldout text="ReferencePose" name="ReferenceFoldout" value="true" style="flex-grow: 1; color: rgb(255, 255, 255); border-left-width: 2px; border-right-width: 2px; border-top-width: 2px; border-bottom-width: 2px; margin-left: 4px; margin-right: 4px; margin-top: 4px; margin-bottom: 4px; padding-left: 4px; padding-right: 4px; padding-top: 4px; padding-bottom: 4px; border-left-color: rgb(45, 45, 45); border-right-color: rgb(45, 45, 45); border-top-color: rgb(45, 45, 45); border-bottom-color: rgb(45, 45, 45);">
-            <uie:ObjectField label="Reference Pose" name="HandPoserObjectField" type="CodeLibrary24.HandPoser.HandPoser, com.codelibrary24.handposer" style="flex-shrink: 1; flex-grow: 1;" />
-            <ui:VisualElement name="CopyDataContainer" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
-                <ui:Toggle label="Copy Thumb" name="CopyThumbToggle" value="true" />
-                <ui:Toggle label="Copy Index" name="CopyIndexToggle" value="true" />
-                <ui:Toggle label="Copy Middle" name="CopyMiddleToggle" value="true" />
-                <ui:Toggle label="Copy Ring" name="CopyRingToggle" value="true" />
-                <ui:Toggle label="Copy Pinky" name="CopyPinkyToggle" value="true" />
-                <ui:Button text="Copy Pose From Reference" display-tooltip-when-elided="true" name="CopyPoseButton" />
+        <uie:ObjectField label="Defaul pose" name="DefaultPoseObjectField" type="CodeLibrary24.HandPoser.HandPose, com.codelibrary24.handposer" />
+        <ui:Foldout text="Load Pose" name="LoadPoseFoldout" value="true" style="flex-grow: 1; color: rgb(255, 255, 255); border-left-width: 2px; border-right-width: 2px; border-top-width: 2px; border-bottom-width: 2px; margin-left: 4px; margin-right: 4px; margin-top: 4px; margin-bottom: 4px; padding-left: 4px; padding-right: 4px; padding-top: 4px; padding-bottom: 4px; border-left-color: rgb(45, 45, 45); border-right-color: rgb(45, 45, 45); border-top-color: rgb(45, 45, 45); border-bottom-color: rgb(45, 45, 45);">
+            <uie:ObjectField label="Hand Pose" name="HandPoseObjectField" type="CodeLibrary24.HandPoser.HandPose, com.codelibrary24.handposer" style="flex-shrink: 1; flex-grow: 1;" />
+            <ui:VisualElement name="LoadDataContainer" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+                <ui:Toggle label="Ignore Thumb" name="IgnoreThumbToggle" value="false" />
+                <ui:Toggle label="Ignore Index" name="IgnoreIndexToggle" value="false" />
+                <ui:Toggle label="Ignore Middle" name="IgnoreMiddleToggle" value="false" />
+                <ui:Toggle label="Ignore Ring" name="IgnoreRingToggle" value="false" />
+                <ui:Toggle label="Ignore Pinky" name="IgnorePinkyToggle" value="false" />
+                <ui:Button text="Load" display-tooltip-when-elided="true" name="LoadPoseButton" />
             </ui:VisualElement>
         </ui:Foldout>
-        <ui:FloatField label="Transition Duration" value="0.5" name="TransitionDurationField" />
-        <uie:PropertyField binding-path="thumb" name="ThumbPropertyField" label="Thumb" style="color: rgb(255, 255, 255); flex-grow: 1; justify-content: space-between; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
-        <uie:PropertyField binding-path="index" name="IndexPropertyField" label="Index" style="color: rgb(255, 255, 255); flex-grow: 1; justify-content: space-between; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
-        <uie:PropertyField binding-path="middle" name="MiddlePropertyField" label="Middle" style="color: rgb(255, 255, 255); flex-grow: 1; justify-content: space-between; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
-        <uie:PropertyField binding-path="ring" name="RingPropertyField" label="Ring" style="color: rgb(255, 255, 255); flex-grow: 1; justify-content: space-between; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
-        <uie:PropertyField binding-path="pinky" name="PinkyPropertyField" label="Pinky" style="color: rgb(255, 255, 255); flex-grow: 1; justify-content: space-between; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
+        <uie:PropertyField name="HandDataPropertyField" binding-path="handData" label="Hand Data" style="color: rgb(255, 255, 255);" />
     </ui:VisualElement>
 </ui:UXML>

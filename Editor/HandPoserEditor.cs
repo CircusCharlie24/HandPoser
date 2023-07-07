@@ -1,35 +1,34 @@
-﻿using System.IO;
-using System.Linq;
-using UnityEditor;
-using UnityEditor.PackageManager;
+﻿using UnityEditor;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
-using UnityEngine;
 
 namespace CodeLibrary24.HandPoser
 {
-    [CustomEditor(typeof(HandPoser))]
+    [CustomEditor(typeof(HandPoseMaker))]
     public class HandPoserEditor : Editor
     {
         private const string PackageID = "com.codelibrary24.handposer";
-        
-        private HandPoser referencePose;
-        private Button copyPoseButton;
+
+        private HandPose pose;
+        private Button loadPoseButton;
 
         private const string ROOT_ASSET = "Assets/HandPoser";
         private const string ROOT_PACKAGE = "Packages/com.codelibrary24.handposer";
 
-        private const string UXML_PATH =  "/Editor/HandPoserEditor.uxml";
+        private const string EDITOR_PATH = "/Editor";
+        private const string UXML_PATH = EDITOR_PATH + "/HandPoserEditor.uxml";
 
-        private HandPoser _targetPose;
+        private const string HAND_DATA_UXML_PATH = EDITOR_PATH + "/HandDataEditor.uxml";
 
-        private VisualElement _copyDataContainer;
+        private HandPoseMaker _handPoseMaker;
 
-        private Toggle _copyThumbToggle;
-        private Toggle _copyIndexToggle;
-        private Toggle _copyMiddleToggle;
-        private Toggle _copyRingToggle;
-        private Toggle _copyPinkyToggle;
+        private VisualElement _loadDataContainer;
+
+        private Toggle _ignoreThumbToggle;
+        private Toggle _ignoreIndexToggle;
+        private Toggle _ignoreMiddleToggle;
+        private Toggle _ignoreRingToggle;
+        private Toggle _ignorePinkyToggle;
 
         private string GetRootPath()
         {
@@ -37,14 +36,15 @@ namespace CodeLibrary24.HandPoser
             {
                 return ROOT_PACKAGE;
             }
+
             return ROOT_ASSET;
         }
 
         public override VisualElement CreateInspectorGUI()
         {
-            _targetPose = (HandPoser) target;
+            _handPoseMaker = (HandPoseMaker) target;
             VisualElement myInspector = new VisualElement();
-            VisualTreeAsset visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(GetRootPath()+UXML_PATH);
+            VisualTreeAsset visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(GetRootPath() + UXML_PATH);
             visualTree.CloneTree(myInspector);
             DrawPoseCopier(myInspector);
             return myInspector;
@@ -55,10 +55,9 @@ namespace CodeLibrary24.HandPoser
             DrawDefaultPose(container);
             DrawReferencePose(container);
             CachePoseDataContainer(container);
-            CheckCopyPoseData();
-            CacheCopyToggles(container);
-            DrawCopyPoseButton(container);
-            DrawDurationField(container);
+            CheckLoadPoseData();
+            CacheIgnoreToggles(container);
+            DrawLoadPoseButton(container);
         }
 
         private void DrawDefaultPose(VisualElement container)
@@ -69,97 +68,100 @@ namespace CodeLibrary24.HandPoser
 
         private void DrawReferencePose(VisualElement container)
         {
-            ObjectField referencePoseObjectField = container.Q<ObjectField>("HandPoserObjectField");
-            referencePose = referencePoseObjectField.value as HandPoser;
+            ObjectField referencePoseObjectField = container.Q<ObjectField>("HandPoseObjectField");
+            referencePoseObjectField.objectType = typeof(HandPose);
+            pose = referencePoseObjectField.value as HandPose;
             referencePoseObjectField.RegisterValueChangedCallback((refPose =>
             {
-                referencePose = refPose.newValue as HandPoser;
-                CheckCopyPoseData();
+                pose = refPose.newValue as HandPose;
+                CheckLoadPoseData();
             }));
         }
 
         private void CachePoseDataContainer(VisualElement container)
         {
-            _copyDataContainer = container.Q<VisualElement>("CopyDataContainer");
+            _loadDataContainer = container.Q<VisualElement>("LoadDataContainer");
         }
 
-        private void CacheCopyToggles(VisualElement container)
+        private void CacheIgnoreToggles(VisualElement container)
         {
-            _copyThumbToggle = container.Q<Toggle>("CopyThumbToggle");
-            _copyIndexToggle = container.Q<Toggle>("CopyIndexToggle");
-            _copyMiddleToggle = container.Q<Toggle>("CopyMiddleToggle");
-            _copyRingToggle = container.Q<Toggle>("CopyRingToggle");
-            _copyPinkyToggle = container.Q<Toggle>("CopyPinkyToggle");
+            _ignoreThumbToggle = container.Q<Toggle>("IgnoreThumbToggle");
+            _ignoreIndexToggle = container.Q<Toggle>("IgnoreIndexToggle");
+            _ignoreMiddleToggle = container.Q<Toggle>("IgnoreMiddleToggle");
+            _ignoreRingToggle = container.Q<Toggle>("IgnoreRingToggle");
+            _ignorePinkyToggle = container.Q<Toggle>("IgnorePinkyToggle");
         }
 
-        private void ShowPoseDataContainer(bool show)
+        private void ShowLoadPoseDataContainer(bool show)
         {
-            if (show)
-            {
-                _copyDataContainer.style.display = DisplayStyle.Flex;
-            }
-            else
-            {
-                _copyDataContainer.style.display = DisplayStyle.None;
-            }
+            _loadDataContainer.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
         }
 
-        private void DrawCopyPoseButton(VisualElement container)
+        private void DrawLoadPoseButton(VisualElement container)
         {
-            copyPoseButton = container.Q<Button>("CopyPoseButton");
-            copyPoseButton.clicked += () =>
+            loadPoseButton = container.Q<Button>("LoadPoseButton");
+            loadPoseButton.clicked += () =>
             {
-                CopyPose(false);
+                LoadPose();
                 EditorUtility.SetDirty(target);
             };
         }
 
-        private void CopyPose(bool mirrorPose)
+        private void DrawSavePoseButton(VisualElement container)
         {
-            if (_copyThumbToggle.value)
+            Button savePoseButton = container.Q<Button>("SavePoseButton");
+            savePoseButton.clicked += () =>
             {
-                CopyFingerPose(referencePose.thumb, _targetPose.thumb);
+                SavePose();
+                EditorUtility.SetDirty(target);
+            };
+        }
+
+        private void LoadPose()
+        {
+            if (!_ignoreThumbToggle.value)
+            {
+                LoadFingerPose(_handPoseMaker.GetHandData().thumb, pose.thumbPose);
             }
 
-            if (_copyIndexToggle.value)
+            if (!_ignoreIndexToggle.value)
             {
-                CopyFingerPose(referencePose.index, _targetPose.index);
+                LoadFingerPose(_handPoseMaker.GetHandData().index, pose.indexFingerPose);
             }
 
-            if (_copyMiddleToggle.value)
+            if (!_ignoreMiddleToggle.value)
             {
-                CopyFingerPose(referencePose.middle, _targetPose.middle);
+                LoadFingerPose(_handPoseMaker.GetHandData().middle, pose.middleFingerPose);
             }
 
-            if (_copyRingToggle.value)
+            if (!_ignoreRingToggle.value)
             {
-                CopyFingerPose(referencePose.ring, _targetPose.ring);
+                LoadFingerPose(_handPoseMaker.GetHandData().ring, pose.ringFingerPose);
             }
 
-            if (_copyPinkyToggle.value)
+            if (!_ignorePinkyToggle.value)
             {
-                CopyFingerPose(referencePose.pinky, _targetPose.pinky);
+                LoadFingerPose(_handPoseMaker.GetHandData().pinky, pose.pinkyFingerPose);
             }
         }
 
-        private void CopyFingerPose(Finger referenceFinger, Finger targetFinger)
+        private void LoadFingerPose(Finger finger, FingerPose fingerPose)
         {
-            for (int i = 0; i < referenceFinger.joints.Length; i++)
+            for (int i = 0; i < fingerPose.jointPoses.Length; i++)
             {
-                Undo.RecordObject(targetFinger.joints[i].joint, "Record_Joint");
-                targetFinger.joints[i].joint.localRotation = referenceFinger.joints[i].joint.localRotation;
+                Undo.RecordObject(finger.joints[i].joint, "Record_Joint_" + i + "_Rotation");
+                finger.joints[i].joint.localRotation = fingerPose.jointPoses[i].rotation;
             }
         }
 
-        private void CheckCopyPoseData()
+        private void CheckLoadPoseData()
         {
-            ShowPoseDataContainer(referencePose != null);
+            ShowLoadPoseDataContainer(pose != null);
         }
 
-        private void DrawDurationField(VisualElement container)
+        private void SavePose()
         {
-            FloatField durationField = container.Q<FloatField>("TransitionDurationField");
-            durationField.bindingPath = "poseTransitionDuration";
+            // TODO: Create a new pose and save it or override exising pose
         }
     }
 }

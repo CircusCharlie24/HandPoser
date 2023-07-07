@@ -1,20 +1,19 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEditor.UIElements;
+using UnityEngine.UIElements;
+using System;
 
 namespace CodeLibrary24.HandPoser
 {
-    using UnityEngine.UIElements;
-    using System;
-
     [CustomPropertyDrawer(typeof(FingerJoint))]
     public class FingerJointPropertyDrawer : PropertyDrawer
     {
-        private const string BindingPath_Joint = "joint";
-        private const string Axis_X = "x";
-        private const string Axis_Y = "y";
-        private const string Axis_Z = "z";
-
+        private const string BindingPathJoints = "joints";
+        private const string BindingPathJoint = "joint";
+        private const string AxisX = "x";
+        private const string AxisY = "y";
+        private const string AxisZ = "z";
 
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
@@ -22,7 +21,7 @@ namespace CodeLibrary24.HandPoser
 
             VisualElement sliderContainer = new VisualElement();
 
-            AddTransform(container, BindingPath_Joint, () =>
+            AddTransform(container, BindingPathJoint, () =>
             {
                 sliderContainer.Clear();
 
@@ -34,12 +33,11 @@ namespace CodeLibrary24.HandPoser
             GetTransform(property);
             container.Add(sliderContainer);
             return container;
-
         }
 
         private Transform GetTransform(SerializedProperty property)
         {
-            SerializedProperty objectFieldProperty = property.serializedObject.FindProperty(GetPropertyPathSubstring(property.propertyPath) + $"[{GetIndex(property)}].joint");
+            SerializedProperty objectFieldProperty = property.serializedObject.FindProperty(GetPropertyPathSubstring(property.propertyPath) + $"[{GetIndex(property)}]." + BindingPathJoint);
             UnityEngine.Object objectReference = objectFieldProperty.objectReferenceValue;
             Transform transform = objectReference as Transform;
             return transform;
@@ -69,8 +67,8 @@ namespace CodeLibrary24.HandPoser
 
         private void AddSliders(VisualElement container, SerializedProperty property)
         {
-            AddSlider(container, Axis_Y, property);
-            AddSlider(container, Axis_Z, property);
+            AddSlider(container, AxisY, property);
+            AddSlider(container, AxisZ, property);
         }
 
         private void AddTransform(VisualElement container, string bindingPath, Action OnValueChanged)
@@ -81,10 +79,7 @@ namespace CodeLibrary24.HandPoser
             transformField.label = bindingPath;
             transformField.bindingPath = bindingPath;
             transformField.style.flexGrow = 1;
-            transformField.RegisterValueChangedCallback(t =>
-            {
-                OnValueChanged?.Invoke();
-            });
+            transformField.RegisterValueChangedCallback(t => { OnValueChanged?.Invoke(); });
             container.Add(transformField);
         }
 
@@ -96,7 +91,7 @@ namespace CodeLibrary24.HandPoser
             slider.highValue = 360;
             switch (axisName)
             {
-                case Axis_X:
+                case AxisX:
                     slider.value = GetTransform(property).eulerAngles.x;
                     slider.RegisterValueChangedCallback(xValue =>
                     {
@@ -104,7 +99,7 @@ namespace CodeLibrary24.HandPoser
                         GetTransform(property).eulerAngles = new Vector3(xValue.newValue, GetTransform(property).eulerAngles.y, GetTransform(property).eulerAngles.z);
                     });
                     break;
-                case Axis_Y:
+                case AxisY:
                     slider.value = GetTransform(property).eulerAngles.y;
                     slider.RegisterValueChangedCallback(yValue =>
                     {
@@ -112,7 +107,7 @@ namespace CodeLibrary24.HandPoser
                         GetTransform(property).eulerAngles = new Vector3(GetTransform(property).eulerAngles.x, yValue.newValue, GetTransform(property).eulerAngles.z);
                     });
                     break;
-                case Axis_Z:
+                case AxisZ:
                     slider.value = GetTransform(property).eulerAngles.z;
                     slider.RegisterValueChangedCallback(zValue =>
                     {
@@ -124,10 +119,10 @@ namespace CodeLibrary24.HandPoser
                     Debug.LogError("Wrong axis name");
                     break;
             }
+
             slider.direction = SliderDirection.Horizontal;
             slider.label = axisName;
             container.Add(slider);
         }
-
     }
 }
