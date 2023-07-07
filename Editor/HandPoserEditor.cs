@@ -147,7 +147,7 @@ namespace CodeLibrary24.HandPoser
 
         private void LoadFingerPose(Finger finger, FingerPose fingerPose)
         {
-            for (int i = 0; i < fingerPose.jointPoses.Length; i++)
+            for (int i = 0; i < finger.joints.Length; i++)
             {
                 Undo.RecordObject(finger.joints[i].joint, "Record_Joint_" + i + "_Rotation");
                 finger.joints[i].joint.localRotation = fingerPose.jointPoses[i].rotation;
