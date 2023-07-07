@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: 109434732395284509, guid: 65847589f926b734d9eaed6e25f0046b,
         type: 3}
       propertyPath: m_Name
-      value: LeftHand_Default Variant
+      value: LeftHand
       objectReference: {fileID: 0}
     - target: {fileID: 109434732395451517, guid: 65847589f926b734d9eaed6e25f0046b,
         type: 3}
@@ -192,29 +192,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb29ee50a5db0f84aaf0cb6bbafdca2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thumb:
-    joints:
-    - joint: {fileID: 6805363215900078621}
-    - joint: {fileID: 6805363215900078623}
-    - joint: {fileID: 6805363215900078617}
-  index:
-    joints:
-    - joint: {fileID: 6805363215900078643}
-    - joint: {fileID: 6805363215900078653}
-    - joint: {fileID: 6805363215900078655}
-  middle:
-    joints:
-    - joint: {fileID: 6805363215900078651}
-    - joint: {fileID: 6805363215900078629}
-    - joint: {fileID: 6805363215900078631}
-  ring:
-    joints:
-    - joint: {fileID: 6805363215900078613}
-    - joint: {fileID: 6805363215900078615}
-    - joint: {fileID: 6805363215900078609}
-  pinky:
-    joints:
-    - joint: {fileID: 6805363215900078627}
-    - joint: {fileID: 6805363215900078637}
-    - joint: {fileID: 6805363215900078639}
-    - joint: {fileID: 6805363215900078633}
+  handData:
+    thumb:
+      joints:
+      - joint: {fileID: 6805363215900078621}
+      - joint: {fileID: 6805363215900078623}
+      - joint: {fileID: 6805363215900078617}
+    index:
+      joints:
+      - joint: {fileID: 6805363215900078643}
+      - joint: {fileID: 6805363215900078653}
+      - joint: {fileID: 6805363215900078655}
+    middle:
+      joints:
+      - joint: {fileID: 6805363215900078651}
+      - joint: {fileID: 6805363215900078629}
+      - joint: {fileID: 6805363215900078631}
+    ring:
+      joints:
+      - joint: {fileID: 6805363215900078613}
+      - joint: {fileID: 6805363215900078615}
+      - joint: {fileID: 6805363215900078609}
+    pinky:
+      joints:
+      - joint: {fileID: 6805363215900078627}
+      - joint: {fileID: 6805363215900078637}
+      - joint: {fileID: 6805363215900078639}
+      - joint: {fileID: 6805363215900078633}
+  defaultPose: {fileID: 11400000, guid: 69fd0933217472f4a877547774d65a2c, type: 2}

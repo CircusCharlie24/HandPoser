@@ -131,7 +131,7 @@ PrefabInstance:
     - target: {fileID: 5686134208185136530, guid: 1fd3a7c43c8190f4d8c167ebde694364,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5686134208185136530, guid: 1fd3a7c43c8190f4d8c167ebde694364,
         type: 3}
@@ -386,7 +386,7 @@ PrefabInstance:
     - target: {fileID: 5686134208185362930, guid: 1fd3a7c43c8190f4d8c167ebde694364,
         type: 3}
       propertyPath: m_Name
-      value: RightHand_Default Variant
+      value: RightHand
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5686134208192617028, guid: 1fd3a7c43c8190f4d8c167ebde694364, type: 3}
@@ -512,31 +512,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb29ee50a5db0f84aaf0cb6bbafdca2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thumb:
-    joints:
-    - joint: {fileID: 1929024405871640242}
-    - joint: {fileID: 1929024405871640240}
-    - joint: {fileID: 1929024405871640246}
-  index:
-    joints:
-    - joint: {fileID: 1929024405871640220}
-    - joint: {fileID: 1929024405871640210}
-    - joint: {fileID: 1929024405871640208}
-  middle:
-    joints:
-    - joint: {fileID: 1929024405871640212}
-    - joint: {fileID: 1929024405871640202}
-    - joint: {fileID: 1929024405871640200}
-  ring:
-    joints:
-    - joint: {fileID: 1929024405871640250}
-    - joint: {fileID: 1929024405871640248}
-    - joint: {fileID: 1929024405871640254}
-  pinky:
-    joints:
-    - joint: {fileID: 1929024405871640204}
-    - joint: {fileID: 1929024405871640194}
-    - joint: {fileID: 1929024405871640192}
-    - joint: {fileID: 1929024405871640198}
-  poseTransitionDuration: 0.5
+  handData:
+    thumb:
+      joints:
+      - joint: {fileID: 1929024405871640242}
+      - joint: {fileID: 1929024405871640240}
+      - joint: {fileID: 1929024405871640246}
+    index:
+      joints:
+      - joint: {fileID: 1929024405871640220}
+      - joint: {fileID: 1929024405871640210}
+      - joint: {fileID: 1929024405871640208}
+    middle:
+      joints:
+      - joint: {fileID: 1929024405871640212}
+      - joint: {fileID: 1929024405871640202}
+      - joint: {fileID: 1929024405871640200}
+    ring:
+      joints:
+      - joint: {fileID: 1929024405871640250}
+      - joint: {fileID: 1929024405871640248}
+      - joint: {fileID: 1929024405871640254}
+    pinky:
+      joints:
+      - joint: {fileID: 1929024405871640204}
+      - joint: {fileID: 1929024405871640194}
+      - joint: {fileID: 1929024405871640192}
+      - joint: {fileID: 1929024405871640198}
   defaultPose: {fileID: 0}
