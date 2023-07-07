@@ -8,5 +8,9 @@ namespace CodeLibrary24.HandPoser
     public class FingerPose
     {
         public List<JointPose> jointPoses;
+        public FingerPose()
+        {
+            jointPoses = new List<JointPose>();
+        }
     }
 }

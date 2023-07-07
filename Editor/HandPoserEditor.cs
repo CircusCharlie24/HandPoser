@@ -1,6 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
+using UnityEngine;
 
 namespace CodeLibrary24.HandPoser
 {
@@ -46,11 +47,11 @@ namespace CodeLibrary24.HandPoser
             VisualElement myInspector = new VisualElement();
             VisualTreeAsset visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(GetRootPath() + UXML_PATH);
             visualTree.CloneTree(myInspector);
-            DrawPoseCopier(myInspector);
+            DrawGUI(myInspector);
             return myInspector;
         }
 
-        private void DrawPoseCopier(VisualElement container)
+        private void DrawGUI(VisualElement container)
         {
             DrawDefaultPose(container);
             DrawReferencePose(container);
@@ -58,6 +59,7 @@ namespace CodeLibrary24.HandPoser
             CheckLoadPoseData();
             CacheIgnoreToggles(container);
             DrawLoadPoseButton(container);
+            DrawCreatePoseButton(container);
         }
 
         private void DrawDefaultPose(VisualElement container)
@@ -107,12 +109,12 @@ namespace CodeLibrary24.HandPoser
             };
         }
 
-        private void DrawSavePoseButton(VisualElement container)
+        private void DrawCreatePoseButton(VisualElement container)
         {
-            Button savePoseButton = container.Q<Button>("SavePoseButton");
-            savePoseButton.clicked += () =>
+            Button createPoseButton = container.Q<Button>("CreatePoseButton");
+            createPoseButton.clicked += () =>
             {
-                SavePose();
+                CreatePose();
                 EditorUtility.SetDirty(target);
             };
         }
@@ -159,9 +161,45 @@ namespace CodeLibrary24.HandPoser
             ShowLoadPoseDataContainer(pose != null);
         }
 
-        private void SavePose()
+        private void CreatePose() // TODO: Make this into an extension method
         {
-            // TODO: Create a new pose and save it or override exising pose
+            HandPose newHandPose = ScriptableObject.CreateInstance<HandPose>();
+
+            string filePath = EditorUtility.SaveFilePanelInProject(
+                "Save new hand pose",
+                newHandPose.name,
+                "asset",
+                "Where do you want to save the new hand pose?");
+
+            if (filePath.Length == 0)
+            {
+                return;
+            }
+
+            SetValuesToNewPose(newHandPose);
+
+            AssetDatabase.CreateAsset(newHandPose, filePath);
+            AssetDatabase.SaveAssets();
+            EditorUtility.FocusProjectWindow();
+            Selection.activeObject = newHandPose;
+        }
+
+        private void SetValuesToNewPose(HandPose handPose)
+        {
+            SetFingerPose(_handPoseMaker.GetHandData().thumb, handPose.thumbPose);
+            SetFingerPose(_handPoseMaker.GetHandData().index, handPose.indexFingerPose);
+            SetFingerPose(_handPoseMaker.GetHandData().middle, handPose.middleFingerPose);
+            SetFingerPose(_handPoseMaker.GetHandData().ring, handPose.ringFingerPose);
+            SetFingerPose(_handPoseMaker.GetHandData().pinky, handPose.pinkyFingerPose);
+        }
+
+        private void SetFingerPose(Finger finger, FingerPose fingerPose)
+        {
+            fingerPose.jointPoses.Clear();
+            foreach (FingerJoint fingerJoint in finger.joints)
+            {
+                fingerPose.jointPoses.Add(new JointPose(fingerJoint.joint.localRotation));
+            }
         }
     }
 }

@@ -13,5 +13,6 @@
             </ui:VisualElement>
         </ui:Foldout>
         <uie:PropertyField name="HandDataPropertyField" binding-path="handData" label="Hand Data" style="color: rgb(255, 255, 255);" />
+        <ui:Button text="Create Pose" display-tooltip-when-elided="true" name="CreatePoseButton" />
     </ui:VisualElement>
 </ui:UXML>

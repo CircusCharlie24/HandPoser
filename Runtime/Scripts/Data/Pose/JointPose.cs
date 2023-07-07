@@ -7,5 +7,10 @@ namespace CodeLibrary24.HandPoser
     public class JointPose
     {
         public Quaternion rotation;
+
+        public JointPose(Quaternion rotation)
+        {
+            this.rotation = rotation;
+        }
     }
 }

@@ -13,5 +13,14 @@ namespace CodeLibrary24.HandPoser
         public FingerPose ringFingerPose;
         public FingerPose pinkyFingerPose;
         public float poseTransitionDuration = 0.35f;
+
+        public HandPose()
+        {
+            thumbPose = new FingerPose();
+            indexFingerPose = new FingerPose();
+            middleFingerPose = new FingerPose();
+            ringFingerPose = new FingerPose();
+            pinkyFingerPose = new FingerPose();
+        }
     }
 }
