@@ -10,8 +10,10 @@ namespace CodeLibrary24.HandPoser
     {
         private const string PackageID = "com.codelibrary24.handposer";
 
-        private HandPose pose;
-        private Button loadPoseButton;
+        private HandPose _defaultPose;
+        private Button _loadDefaultPoseButton;
+        private HandPose _pose;
+        private Button _loadPoseButton;
 
         private const string ROOT_ASSET = "Assets/HandPoser";
         private const string ROOT_PACKAGE = "Packages/com.codelibrary24.handposer";
@@ -56,7 +58,9 @@ namespace CodeLibrary24.HandPoser
             DrawDefaultPose(container);
             DrawReferencePose(container);
             CachePoseDataContainer(container);
-            CheckLoadPoseData();
+            CacheLoadDefaultPoseButton(container);
+            ShowLoadPoseDataContainer(_pose != null);
+            ShowLoadDefaultPoseButton(_defaultPose != null);
             CacheIgnoreToggles(container);
             DrawLoadPoseButton(container);
             DrawCreatePoseButton(container);
@@ -66,17 +70,34 @@ namespace CodeLibrary24.HandPoser
         {
             ObjectField defaultPoseObjectField = container.Q<ObjectField>("DefaultPoseObjectField");
             defaultPoseObjectField.bindingPath = "defaultPose";
+            _defaultPose = defaultPoseObjectField.value as HandPose;
+            defaultPoseObjectField.RegisterValueChangedCallback((refPose =>
+            {
+                _defaultPose = refPose.newValue as HandPose;
+                ShowLoadDefaultPoseButton(_defaultPose != null);
+            }));
+        }
+
+        private void CacheLoadDefaultPoseButton(VisualElement container)
+        {
+            _loadDefaultPoseButton = container.Q<Button>("LoadDefaultPoseButton");
+            _loadDefaultPoseButton.clickable.clicked += () => { LoadDefaultPose(); };
+        }
+
+        private void ShowLoadDefaultPoseButton(bool show)
+        {
+            _loadDefaultPoseButton.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
         }
 
         private void DrawReferencePose(VisualElement container)
         {
             ObjectField referencePoseObjectField = container.Q<ObjectField>("HandPoseObjectField");
             referencePoseObjectField.objectType = typeof(HandPose);
-            pose = referencePoseObjectField.value as HandPose;
+            _pose = referencePoseObjectField.value as HandPose;
             referencePoseObjectField.RegisterValueChangedCallback((refPose =>
             {
-                pose = refPose.newValue as HandPose;
-                CheckLoadPoseData();
+                _pose = refPose.newValue as HandPose;
+                ShowLoadPoseDataContainer(_pose != null);
             }));
         }
 
@@ -101,8 +122,8 @@ namespace CodeLibrary24.HandPoser
 
         private void DrawLoadPoseButton(VisualElement container)
         {
-            loadPoseButton = container.Q<Button>("LoadPoseButton");
-            loadPoseButton.clicked += () =>
+            _loadPoseButton = container.Q<Button>("LoadPoseButton");
+            _loadPoseButton.clicked += () =>
             {
                 LoadPose();
                 EditorUtility.SetDirty(target);
@@ -114,36 +135,45 @@ namespace CodeLibrary24.HandPoser
             Button createPoseButton = container.Q<Button>("CreatePoseButton");
             createPoseButton.clicked += () =>
             {
-                CreatePose();
+                CreateNewPose();
                 EditorUtility.SetDirty(target);
             };
+        }
+
+        private void LoadDefaultPose()
+        {
+            LoadFingerPose(_handPoseMaker.GetHandData().thumb, _defaultPose.thumbPose);
+            LoadFingerPose(_handPoseMaker.GetHandData().index, _defaultPose.indexFingerPose);
+            LoadFingerPose(_handPoseMaker.GetHandData().middle, _defaultPose.middleFingerPose);
+            LoadFingerPose(_handPoseMaker.GetHandData().ring, _defaultPose.ringFingerPose);
+            LoadFingerPose(_handPoseMaker.GetHandData().pinky, _defaultPose.pinkyFingerPose);
         }
 
         private void LoadPose()
         {
             if (!_ignoreThumbToggle.value)
             {
-                LoadFingerPose(_handPoseMaker.GetHandData().thumb, pose.thumbPose);
+                LoadFingerPose(_handPoseMaker.GetHandData().thumb, _pose.thumbPose);
             }
 
             if (!_ignoreIndexToggle.value)
             {
-                LoadFingerPose(_handPoseMaker.GetHandData().index, pose.indexFingerPose);
+                LoadFingerPose(_handPoseMaker.GetHandData().index, _pose.indexFingerPose);
             }
 
             if (!_ignoreMiddleToggle.value)
             {
-                LoadFingerPose(_handPoseMaker.GetHandData().middle, pose.middleFingerPose);
+                LoadFingerPose(_handPoseMaker.GetHandData().middle, _pose.middleFingerPose);
             }
 
             if (!_ignoreRingToggle.value)
             {
-                LoadFingerPose(_handPoseMaker.GetHandData().ring, pose.ringFingerPose);
+                LoadFingerPose(_handPoseMaker.GetHandData().ring, _pose.ringFingerPose);
             }
 
             if (!_ignorePinkyToggle.value)
             {
-                LoadFingerPose(_handPoseMaker.GetHandData().pinky, pose.pinkyFingerPose);
+                LoadFingerPose(_handPoseMaker.GetHandData().pinky, _pose.pinkyFingerPose);
             }
         }
 
@@ -156,12 +186,7 @@ namespace CodeLibrary24.HandPoser
             }
         }
 
-        private void CheckLoadPoseData()
-        {
-            ShowLoadPoseDataContainer(pose != null);
-        }
-
-        private void CreatePose() // TODO: Make this into an extension method
+        private void CreateNewPose() // TODO: Make this into an extension method
         {
             HandPose newHandPose = ScriptableObject.CreateInstance<HandPose>();
 

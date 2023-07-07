@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c6fa2f1b6c74199b93a4c8e5f3d5342, type: 3}
+  m_Name: PointPose
+  m_EditorClassIdentifier: 
+  thumbPose:
+    jointPoses:
+    - rotation: {x: 0.23645173, y: 0.958069, z: -0.029671462, w: 0.15910344}
+    - rotation: {x: 0.0000006854534, y: -0.00000013411045, z: -0.23407649, w: 0.9722182}
+    - rotation: {x: 0.0000017773218, y: 0.0000009909509, z: -0.11320318, w: 0.9935719}
+  indexFingerPose:
+    jointPoses:
+    - rotation: {x: 0.012683796, y: -0.62480015, z: -0.78060263, w: -0.011113823}
+    - rotation: {x: -0.012957545, y: -0.0025394165, z: -0.036685016, w: 0.9992397}
+    - rotation: {x: -0.025212377, y: -0.0077216234, z: 0.083742045, w: 0.9961386}
+  middleFingerPose:
+    jointPoses:
+    - rotation: {x: 0.42698267, y: -0.49561024, z: -0.5434791, w: -0.52601033}
+    - rotation: {x: -0.021217141, y: 0.03529239, z: 0.64534265, w: -0.7627826}
+    - rotation: {x: -0.000007029391, y: 0.00002274057, z: -0.7985856, w: 0.6018813}
+  ringFingerPose:
+    jointPoses:
+    - rotation: {x: 0.47109213, y: -0.41001776, z: -0.5991741, w: -0.50094724}
+    - rotation: {x: -0.053590354, y: 0.047398053, z: 0.6253624, w: -0.7770479}
+    - rotation: {x: -0.024190377, y: -0.028819691, z: -0.74333185, w: 0.6678638}
+  pinkyFingerPose:
+    jointPoses:
+    - rotation: {x: -0.42439166, y: -0.0047657485, z: 0.12960187, w: 0.896143}
+    - rotation: {x: -0.22641568, y: 0.07711651, z: 0.64571285, w: 0.72515106}
+    - rotation: {x: 0.16962165, y: -0.08456299, z: -0.65033597, w: 0.73562276}
+    - rotation: {x: -0.048696075, y: -0.0915797, z: -0.6399754, w: 0.7613628}
+  poseTransitionDuration: 0.35
