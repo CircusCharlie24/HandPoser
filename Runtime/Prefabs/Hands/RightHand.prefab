@@ -410,6 +410,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6065347685393353534}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1929024405871640196 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5686134208185136570, guid: 1fd3a7c43c8190f4d8c167ebde694364,
+    type: 3}
+  m_PrefabInstance: {fileID: 6065347685393353534}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1929024405871640198 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5686134208185136568, guid: 1fd3a7c43c8190f4d8c167ebde694364,
@@ -434,6 +440,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6065347685393353534}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1929024405871640206 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5686134208185136560, guid: 1fd3a7c43c8190f4d8c167ebde694364,
+    type: 3}
+  m_PrefabInstance: {fileID: 6065347685393353534}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1929024405871640208 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5686134208185136558, guid: 1fd3a7c43c8190f4d8c167ebde694364,
@@ -449,6 +461,12 @@ Transform:
 --- !u!4 &1929024405871640212 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5686134208185136554, guid: 1fd3a7c43c8190f4d8c167ebde694364,
+    type: 3}
+  m_PrefabInstance: {fileID: 6065347685393353534}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1929024405871640214 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5686134208185136552, guid: 1fd3a7c43c8190f4d8c167ebde694364,
     type: 3}
   m_PrefabInstance: {fileID: 6065347685393353534}
   m_PrefabAsset: {fileID: 0}
@@ -470,6 +488,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6065347685393353534}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1929024405871640244 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5686134208185136522, guid: 1fd3a7c43c8190f4d8c167ebde694364,
+    type: 3}
+  m_PrefabInstance: {fileID: 6065347685393353534}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1929024405871640246 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5686134208185136520, guid: 1fd3a7c43c8190f4d8c167ebde694364,
@@ -485,6 +509,12 @@ Transform:
 --- !u!4 &1929024405871640250 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5686134208185136516, guid: 1fd3a7c43c8190f4d8c167ebde694364,
+    type: 3}
+  m_PrefabInstance: {fileID: 6065347685393353534}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1929024405871640252 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5686134208185136514, guid: 1fd3a7c43c8190f4d8c167ebde694364,
     type: 3}
   m_PrefabInstance: {fileID: 6065347685393353534}
   m_PrefabAsset: {fileID: 0}
@@ -518,25 +548,30 @@ MonoBehaviour:
       - joint: {fileID: 1929024405871640242}
       - joint: {fileID: 1929024405871640240}
       - joint: {fileID: 1929024405871640246}
+      - joint: {fileID: 1929024405871640244}
     index:
       joints:
       - joint: {fileID: 1929024405871640220}
       - joint: {fileID: 1929024405871640210}
       - joint: {fileID: 1929024405871640208}
+      - joint: {fileID: 1929024405871640214}
     middle:
       joints:
       - joint: {fileID: 1929024405871640212}
       - joint: {fileID: 1929024405871640202}
       - joint: {fileID: 1929024405871640200}
+      - joint: {fileID: 1929024405871640206}
     ring:
       joints:
       - joint: {fileID: 1929024405871640250}
       - joint: {fileID: 1929024405871640248}
       - joint: {fileID: 1929024405871640254}
+      - joint: {fileID: 1929024405871640252}
     pinky:
       joints:
       - joint: {fileID: 1929024405871640204}
       - joint: {fileID: 1929024405871640194}
       - joint: {fileID: 1929024405871640192}
       - joint: {fileID: 1929024405871640198}
+      - joint: {fileID: 1929024405871640196}
   defaultPose: {fileID: 0}
